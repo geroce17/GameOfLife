@@ -8,22 +8,22 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
-<input id="txtSize" type="text">
-<input type="button" value="Genera una tabla" onclick="genera_tabla()">
-
 <div class="container">
-    <div id="contenido">
+    <input id="txtSize" type="text">
+    <input type="button" value="Genera una tabla" onclick="genera_tabla()">
+    <input type="button" value="inicio">
+    <section id="tablero">
         
-    </div>
+    </section>
 </div>
-
 
 <script>
     function genera_tabla() {
+      // Obtiene el tamaño deseado para el tablero (no mas de 550 aprx)
       var size = document.getElementById("txtSize").value;
       // Obtener la referencia del elemento body
-      var body = document.getElementsByTagName("body")[0];
+      document.getElementById("tablero").innerHTML="";
+      var body = document.getElementsByTagName("section")[0];
 
       // Crea un elemento <table> y un elemento <tbody>
       var tabla   = document.createElement("table");
@@ -39,8 +39,9 @@
           // texto sea el contenido de <td>, ubica el elemento <td> al final
           // de la hilera de la tabla
           var celda = document.createElement("td");
+            celda.onclick = function() {cambiaColor(this)};
             celda.style.backgroundColor = "black";
-            celda.style.padding = "5px";
+            celda.style.padding = "3px";
           //var textoCelda = document.createTextNode("H "+i+", C "+j);
           //celda.appendChild(textoCelda);
           hilera.appendChild(celda);
@@ -55,7 +56,11 @@
       // appends <table> into <body>
       body.appendChild(tabla);
       // modifica el atributo "border" de la tabla y lo fija a "2";
-      tabla.setAttribute("border", ".5");
+      tabla.setAttribute("border", ".1");
+    }
+    
+    function cambiaColor(celda){
+        celda.style.backgroundColor="white";
     }
 </script>
 
