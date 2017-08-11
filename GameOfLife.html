@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+    <meta charset="UFT-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0,maximum-scale=1.0, minimum-scale=.1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<input id="txtSize" type="text">
+<input type="button" value="Genera una tabla" onclick="genera_tabla()">
+
+<div class="container">
+    <div id="contenido">
+        
+    </div>
+</div>
+
+
+<script>
+    function genera_tabla() {
+      var size = document.getElementById("txtSize").value;
+      // Obtener la referencia del elemento body
+      var body = document.getElementsByTagName("body")[0];
+
+      // Crea un elemento <table> y un elemento <tbody>
+      var tabla   = document.createElement("table");
+      var tblBody = document.createElement("tbody");
+
+      // Crea las celdas
+      for (var i = 0; i < size; i++) {
+        // Crea las hileras de la tabla
+        var hilera = document.createElement("tr");
+
+        for (var j = 0; j < size; j++) {
+          // Crea un elemento <td> y un nodo de texto, haz que el nodo de
+          // texto sea el contenido de <td>, ubica el elemento <td> al final
+          // de la hilera de la tabla
+          var celda = document.createElement("td");
+            celda.style.backgroundColor = "black";
+            celda.style.padding = "5px";
+          //var textoCelda = document.createTextNode("H "+i+", C "+j);
+          //celda.appendChild(textoCelda);
+          hilera.appendChild(celda);
+        }
+
+        // agrega la hilera al final de la tabla (al final del elemento tblbody)
+        tblBody.appendChild(hilera);
+      }
+
+      // posiciona el <tbody> debajo del elemento <table>
+      tabla.appendChild(tblBody);
+      // appends <table> into <body>
+      body.appendChild(tabla);
+      // modifica el atributo "border" de la tabla y lo fija a "2";
+      tabla.setAttribute("border", ".5");
+    }
+</script>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>
