@@ -11,16 +11,20 @@
 <div class="container">
     <input id="txtSize" type="text">
     <input type="button" value="Genera una tabla" onclick="genera_tabla()">
-    <input type="button" value="inicio">
+    <input type="button" value="inicio" onclick="hazMagia()">
+    <label id="ex">----------------</label>
     <section id="tablero">
-        
+        <!--Aqui va el codigo generado-->
     </section>
 </div>
 
 <script>
+    //Declaracion global de matriz
+    var matriz = new Array(3);
+    // Obtiene el tamaño deseado para el tablero (no mas de 150 aprx)
+    var size;
+    
     function genera_tabla() {
-      // Obtiene el tamaño deseado para el tablero (no mas de 550 aprx)
-      var size = document.getElementById("txtSize").value;
       // Obtener la referencia del elemento body
       document.getElementById("tablero").innerHTML="";
       var body = document.getElementsByTagName("section")[0];
@@ -28,9 +32,11 @@
       // Crea un elemento <table> y un elemento <tbody>
       var tabla   = document.createElement("table");
       var tblBody = document.createElement("tbody");
-
+        
+      size = document.getElementById("txtSize").value;
       // Crea las celdas
       for (var i = 0; i < size; i++) {
+          matriz[i]=new Array(3);
         // Crea las hileras de la tabla
         var hilera = document.createElement("tr");
 
@@ -42,6 +48,7 @@
             celda.onclick = function() {cambiaColor(this)};
             celda.style.backgroundColor = "black";
             celda.style.padding = "3px";
+            matriz[i][j]=celda;
           //var textoCelda = document.createTextNode("H "+i+", C "+j);
           //celda.appendChild(textoCelda);
           hilera.appendChild(celda);
@@ -59,9 +66,27 @@
       tabla.setAttribute("border", ".1");
     }
     
-    function cambiaColor(celda){
+function hazMagia()
+{
+    document.getElementById("ex").textContent=size;
+    
+    for(var r = 0; r < size; r++)
+    {
+        for(var c = 0; c < size; c++)
+        {
+            matriz[r][c].style.backgroundColor="white";
+        }
+    }      
+}
+
+function cambiaColor(celda)
+{
+    if(celda.style.backgroundColor=="black"){
         celda.style.backgroundColor="white";
     }
+    else
+        celda.style.backgroundColor="black";
+}
 </script>
 
 <script src="js/jquery.min.js"></script>
