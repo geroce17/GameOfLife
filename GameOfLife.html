@@ -66,18 +66,134 @@
       tabla.setAttribute("border", ".1");
     }
     
+    function colorC(r,c){
+        matriz[r][c].style.backgroundColor="white";
+    }
+
 function hazMagia()
 {
     document.getElementById("ex").textContent=size;
+    var el, up, down, right, left, dls, dli, drs,dri, val, antEL, antVal, cont;
     
-    for(var r = 0; r < size; r++)
+    for(var r = 1; r < size-1; r++)
     {
-        for(var c = 0; c < size; c++)
+        for(var c = 1; c < size-1; c++)
         {
-            matriz[r][c].style.backgroundColor="white";
+            
+            val=false;
+            cont=0;
+            el=matriz[r][c];
+            if(el.style.backgroundColor=="black")
+            {
+                up=matriz[r-1][c];
+                down=matriz[r+1][c];
+                right=matriz[r][c+1];
+                left=matriz[r][c-1];
+                dls=matriz[r-1][c-1];
+                dli=matriz[r+1][c-1];
+                drs=matriz[r-1][c+1];
+                dri=matriz[r+1][c+1];
+
+                if(up!=undefined && up.style.backgroundColor=="white")
+                    cont++;
+                if(down!=undefined && down.style.backgroundColor=="white")
+                    cont++;
+                if(left!=undefined && left.style.backgroundColor=="white")
+                    cont++;
+                if(right!=undefined && right.style.backgroundColor=="white")
+                    cont++;
+                if(dls!=undefined && dls.style.backgroundColor=="white")
+                    cont++;
+                if(dli!=undefined && dli.style.backgroundColor=="white")
+                    cont++;
+                if(drs!=undefined && drs.style.backgroundColor=="white")
+                    cont++;
+                if(dri!=undefined && dri.style.backgroundColor=="white")
+                    cont++;
+
+                if(cont==3){
+                    val=true;
+                }
+                
+                if(antVal!=undefined && antVal==true)
+                        antEL.style.backgroundColor="white";
+
+                if(val==true)
+                {
+                    antVal=val;
+                    antEL=el;
+                }
+                /*if(el.style.backgroundColor=="white"){
+                    if(cont<2 || cont>3)
+                        el.style.backgroundColor="black";
+                }*/
+            }
         }
-    }      
+    }
+    
+    /*for(var r = 1; r < size-1; r++)
+    {
+        for(var c = 1; c < size-1; c++)
+        {
+            val=false;
+            cont=0;
+            el=matriz[r][c];
+            if(el.style.backgroundColor=="white")
+            {
+                up=matriz[r-1][c];
+                down=matriz[r+1][c];
+                right=matriz[r][c+1];
+                left=matriz[r][c-1];
+                dlu=matriz[r+1][c-1];
+                dld=matriz[r-1][c-1];
+                dru=matriz[r+1][c+1];
+                drd=matriz[r-1][c+1];
+
+                if(up!=undefined && up.style.backgroundColor=="white")
+                    cont++; vector.push(cont);
+                if(down!=undefined && down.style.backgroundColor=="white")
+                    cont++;vector.push(cont);
+                if(left!=undefined && left.style.backgroundColor=="white")
+                    cont++;vector.push(cont);
+                if(right!=undefined && right.style.backgroundColor=="white")
+                    cont++;vector.push(cont);
+                if(dlu!=undefined && dlu.style.backgroundColor=="white")
+                    cont++;vector.push(cont);
+                if(dld!=undefined && dld.style.backgroundColor=="white")
+                    cont++;vector.push(cont);
+                if(dru!=undefined && dru.style.backgroundColor=="white")
+                    cont++;vector.push(cont);
+                if(drd!=undefined && drd.style.backgroundColor=="white")
+                    cont++;vector.push(cont);
+
+                if(el.style.backgroundColor=="white"){
+                    if(cont<2 || cont>3)
+                        el.style.backgroundColor="black";
+                }
+            }
+        }
+    }*/
 }
+    
+/*function contadorVecinos(){
+    cont = 0;
+    if(up!=undefined && up.style.backgroundColor=="white")
+        cont++; vector.push(cont);
+    if(down!=undefined && down.style.backgroundColor=="white")
+        cont++;vector.push(cont);
+    if(left!=undefined && left.style.backgroundColor=="white")
+        cont++;vector.push(cont);
+    if(right!=undefined && right.style.backgroundColor=="white")
+        cont++;vector.push(cont);
+    if(dlu!=undefined && dlu.style.backgroundColor=="white")
+        cont++;vector.push(cont);
+    if(dld!=undefined && dld.style.backgroundColor=="white")
+        cont++;vector.push(cont);
+    if(dru!=undefined && dru.style.backgroundColor=="white")
+        cont++;vector.push(cont);
+    if(drd!=undefined && drd.style.backgroundColor=="white")
+        cont++;vector.push(cont);
+}*/
 
 function cambiaColor(celda)
 {
