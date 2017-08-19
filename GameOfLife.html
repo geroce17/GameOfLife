@@ -12,9 +12,10 @@
     <input id="txtSize" type="text">
     <input type="button" value="Genera una tabla" onclick="genera_tabla()">
     <input type="button" value="inicio" onclick="hazMagia()">
+    <label class="col-md-4" id="ex">EX</label>
     <div class="col-md-12">
-        <label class="col-md-6" id="ex">EX</label>
         <label class="col-md-6" id="ex2">EX2</label>
+        <label class="col-md-6" id="ex3">EX3</label>
     </div>
     <section id="tablero">
         <!--Aqui va el codigo generado-->
@@ -22,10 +23,8 @@
 </div>
 
 <script>
-    //Declaracion global de matriz
-    var matriz = new Array(3);
-    // Obtiene el tamaño deseado para el tablero (no mas de 150 aprx)
-    var size;
+    var matriz = new Array(3); //Declaracion global de matriz
+    var size; // Obtiene el tamaño deseado para el tablero (no mas de 150 aprx)
     
     function genera_tabla() {
       // Obtener la referencia del elemento body
@@ -37,6 +36,7 @@
       var tblBody = document.createElement("tbody");
         
       size = document.getElementById("txtSize").value;
+      document.getElementById("ex").textContent=size;
       // Crea las celdas
       for (var i = 0; i < size; i++) {
           matriz[i]=new Array(3);
@@ -68,36 +68,165 @@
       // modifica el atributo "border" de la tabla y lo fija a "2";
       tabla.setAttribute("border", ".1");
     }
-    
-    function colorC(r,c){
-        matriz[r][c].style.backgroundColor="white";
-    }
 
 function hazMagia()
 {
-    document.getElementById("ex").textContent=size;
+    document.getElementById("ex2").textContent=size;
     var el, up, down, right, left, dls, dli, drs,dri, val, antEL, antVal, cont;
     var asigRes = new Array();
     var asigKill = new Array();
     
-    for(var r = 1; r < size-1; r++)
+    //document.getElementById("ex").innerHTML=asigRes.length;
+    //document.getElementById("ex2").innerHTML= asigKill.length;
+    
+    for(var r = 0; r <=size-1; r++)
     {
-        for(var c = 1; c < size-1; c++)
+        for(var c = 0; c <=size-1; c++)
         {
-            
             val=false;
             cont=0;
+            up=undefined;
+            down=undefined;
+            right=undefined;
+            left=undefined;
+            dls=undefined;
+            dli=undefined;
+            drs=undefined;
+            dri=undefined;
             el=matriz[r][c];
             if(el.style.backgroundColor=="black")
             {
-                up=matriz[r-1][c];
-                down=matriz[r+1][c];
-                right=matriz[r][c+1];
-                left=matriz[r][c-1];
-                dls=matriz[r-1][c-1];
-                dli=matriz[r+1][c-1];
-                drs=matriz[r-1][c+1];
-                dri=matriz[r+1][c+1];
+                if(size<=2)
+                {
+                    document.getElementById("ex3").innerHTML="entro";
+                    if(r==0 && c==0)
+                    {
+                        right=matriz[r][c+1];
+                        down=matriz[r+1][c];
+                        dri=matriz[r+1][c+1];
+                    }
+                    else
+                    {
+                        if(r==0 && c==1)
+                        {
+                            left=matriz[r][c-1];
+                            down=matriz[r+1][c];
+                            dli=matriz[r+1][c-1];
+                        }
+                        else
+                        {
+                            if(r==1 && c==0)
+                            {
+                                up=matriz[r-1][c];
+                                right=matriz[r][c+1];
+                                drs=matriz[r-1][c+1];
+                            }
+                            else
+                            {
+                                if(r==1 && c==1)
+                                {
+                                    up=matriz[r-1][c];
+                                    dls=matriz[r-1][c-1];
+                                    left=matriz[r][c-1];
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if(r==0 && c==0)
+                    {
+                        right=matriz[r][c+1];
+                        down=matriz[r+1][c];
+                        dri=matriz[r+1][c+1];
+                    }
+                    else
+                    {
+                        if(r==0 && (c>0 && c<size-1))
+                        {
+                            down=matriz[r+1][c];
+                            right=matriz[r][c+1];
+                            left=matriz[r][c-1];
+                            dli=matriz[r+1][c-1];
+                            dri=matriz[r+1][c+1];
+                        }
+                        else
+                        {
+                            if(r==0 && c==size-1)
+                            {
+                                left=matriz[r][c-1];
+                                down=matriz[r+1][c];
+                                dli=matriz[r+1][c-1];
+                            }
+                            else
+                            {
+                                if((r>0 && r<size-1) && c==0)
+                                {
+                                    right=matriz[r][c+1];
+                                    up=matriz[r-1][c];
+                                    down=matriz[r+1][c];
+                                    dri=matriz[r+1][c+1];
+                                    drs=matriz[r-1][c+1];
+                                }
+                                else
+                                {
+                                    if(r==size-1 && c==0)
+                                    {
+                                        up=matriz[r-1][c];
+                                        right=matriz[r][c+1];
+                                        drs=matriz[r-1][c+1];
+                                    }
+                                    else
+                                    {
+                                        if(r==size-1 && (c>0 && c<size-1))
+                                        {
+                                            up=matriz[r-1][c];
+                                            right=matriz[r][c+1];
+                                            left=matriz[r][c-1];
+                                            dls=matriz[r-1][c-1];
+                                            drs=matriz[r-1][c+1];
+                                        }
+                                        else
+                                        {
+                                            if(r==size-1 && c==size-1)
+                                            {
+                                                up=matriz[r-1][c];
+                                                dls=matriz[r-1][c-1];
+                                                left=matriz[r][c-1];
+                                            }
+                                            else
+                                            {
+                                                if((r>0 && r<size-1) && c==size-1)
+                                                {
+                                                    left=matriz[r][c-1];
+                                                    down=matriz[r+1][c];
+                                                    up=matriz[r-1][c];
+                                                    dli=matriz[r+1][c-1];
+                                                    dls=matriz[r-1][c-1];
+                                                }
+                                            }   
+                                        } 
+                                    }  
+                                } 
+                            } 
+                        }
+                    }
+                }
+
+
+
+                if((r>0 && r<size-1) && (c>0 && c<size-1))
+                {
+                    up=matriz[r-1][c];
+                    down=matriz[r+1][c];
+                    right=matriz[r][c+1];
+                    left=matriz[r][c-1];
+                    dls=matriz[r-1][c-1];
+                    dli=matriz[r+1][c-1];
+                    drs=matriz[r-1][c+1];
+                    dri=matriz[r+1][c+1];
+                }
 
                 if(up!=undefined && up.style.backgroundColor=="white")
                     cont++;
@@ -120,24 +249,11 @@ function hazMagia()
                     val=true;
                     asigRes.push(el);
                 }
-                
-                /*if(antVal!=undefined && antVal==true)
-                        antEL.style.backgroundColor="white";
-
-                if(val==true)
-                {
-                    antVal=val;
-                    antEL=el;
-                }
-                if(el.style.backgroundColor=="white"){
-                    if(cont<2 || cont>3)
-                        el.style.backgroundColor="black";
-                }*/
             }
         }
     }
     
-    for(var r = 1; r < size-1; r++)
+    /*for(var r = 1; r < size-1; r++)
     {
         for(var c = 1; c < size-1; c++)
         {
@@ -180,21 +296,19 @@ function hazMagia()
             }
         }
     }
-    
+    */
     var i = asigKill.length-1;
     var v = asigRes.length-1;
     while(v>=0)
     {
         asigRes[v].style.backgroundColor="white";
-        asigKill[i].style.backgroundColor="black";
         v--;
-        i--;
-        
     }
-    
-    document.getElementById("ex").innerHTML=asigRes;
-    document.getElementById("ex2").innerHTML= asigKill;
-    
+    while(i>=0)
+    {
+        asigKill[i].style.backgroundColor="black";
+        i--;
+    }
 }
 function cambiaColor(celda)
 {
