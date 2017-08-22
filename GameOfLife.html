@@ -22,9 +22,7 @@
 </div>
 
 <script>
-    var matriz = new Array(3); //Declaracion global de matriz
-    var size; // Obtiene el tamaño deseado para el tablero (no mas de 150 aprx)
-
+    var size, matriz = new Array(3);
     function genera_tabla()
     {
       document.getElementById("tablero").innerHTML=""; // Obtener la referencia del elemento section
@@ -62,62 +60,43 @@
 function jugar()
 {
     var el, up, down, right, left, dls, dli, drs,dri, val, antEL, antVal, cont;
-    var asigRes = new Array();
-    var asigKill = new Array();
-
+    var asigKill = new Array(), asigRes = new Array();
     for(var r = 0; r <=size-1; r++)
     {
         for(var c = 0; c <=size-1; c++)
         {
             el=matriz[r][c];
-            if(el.style.backgroundColor=="black")
+            val=false;
+            cont=0;
+            dls = dli = drs = dri = undefined;
+            up = down = right = left = undefined;
+            cont = escanearCuadros(r, c, size, right, down, left, up, dls, dli, drs, dri, cont);
+            if(cont==3)
             {
-              val=false;
-              cont=0;
-              dls = dli = drs = dri = undefined;
-              up = down = right = left = undefined;
-              cont = escanearCuadros(r, c, size, right, down, left, up, dls, dli, drs, dri, cont);
-                if(cont==3)
-                {
-                   val=true;
-                   asigRes.push(el);
-                }
+                val=true;
+                asigRes.push(el);
+            }
+            if(cont<2 || cont>3){
+                asigKill.push(el);
             }
         }
     }
-
-    for(var r = 0; r <=size-1; r++)
-    {
-        for(var c = 0; c <=size-1; c++)
-        {
-          el=matriz[r][c];
-          if(el.style.backgroundColor=="white")
-          {
-              val=false;
-              cont=0;
-              dls = dli = drs = dri = undefined;
-              up = down = right = left = undefined;
-              el=matriz[r][c];
-              if(el.style.backgroundColor=="white")
-              {
-                cont = escanearCuadros(r, c, size, right, down, left, up, dls, dli, drs, dri, cont);
-                if(cont<2 || cont>3){
-                  asigKill.push(el);
-                }
-              }
-            }
-          }
-        }
-        //Se ejecuta el borrado y resucitación de celulas
-        for(var v = asigRes.length-1; v>=0; v--)
-          asigRes[v].style.backgroundColor="white";
-
-        for(var i = asigKill.length-1; i>=0; i--)
-          asigKill[i].style.backgroundColor="black";
+    
+    //Se ejecuta el borrado y resucitación de celulas
+    reviveCelulas(asigRes);
+    eliminaCelulas(asigKill);
+}
+function reviveCelulas(asigRes){
+    for(var v = asigRes.length-1; v>=0; v--)
+        asigRes[v].style.backgroundColor="white";
 }
 
-function escanearCuadros(r, c, size, right, down, left, up, dls, dli, drs, dri, cont)
-{
+function eliminaCelulas(asigKill){
+    for(var i = asigKill.length-1; i>=0; i--)
+          asigKill[i].style.backgroundColor="black";
+}
+    
+function escanearCuadros(r, c, size, right, down, left, up, dls, dli, drs, dri, cont){
     if(size<=2)
     {
         if(r==0 && c==0)
@@ -234,6 +213,7 @@ function escanearCuadros(r, c, size, right, down, left, up, dls, dli, drs, dri, 
             }
         }
     }
+    
     if((r>0 && r<size-1) && (c>0 && c<size-1))
     {
         up=matriz[r-1][c];
